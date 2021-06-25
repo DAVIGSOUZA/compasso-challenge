@@ -2,7 +2,10 @@ const HomePage = () => {
   
   return (
     <div>
-      home page
+      <h1>
+        Compasso Github Search
+      </h1>
+      
     </div>
   )
 }
