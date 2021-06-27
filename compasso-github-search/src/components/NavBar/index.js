@@ -9,6 +9,7 @@ const NavBar = () => {
 
   useEffect(() => {
     activeTab()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [listToShow])
 
   const activeTab = () => {

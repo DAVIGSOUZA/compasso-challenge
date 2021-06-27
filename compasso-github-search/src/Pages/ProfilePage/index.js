@@ -45,7 +45,7 @@ const ProfilePage = () => {
   return (
     <DefaultLayout>
       <div className="container">
-        <div className="row align-items-center py-4">
+        <div className="row align-items-center pt-4 pb-md-5">
           <div className="col-12 col-md-1 d-flex justify-content-center">
             <Logo/>
           </div>
