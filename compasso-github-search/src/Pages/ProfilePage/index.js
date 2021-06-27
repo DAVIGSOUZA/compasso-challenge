@@ -1,20 +1,23 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import axios from 'axios'
-import { BASE_URL, client_id, client_secret } from "../../utils";
-import useGlobalContext from "../../Context/GlobalContext";
-//components
+import { BASE_URL, client_id, client_secret } from '../../utils'
+import useGlobalContext from '../../Context/GlobalContext'
 import SearchBar from '../../components/SearchBar'
 import UserInfo from '../../components/UserInfo'
-//fontawesome
+import Logo from "../../components/Logo";
+import Card from '../../components/Card'
+import NavBar from '../../components/NavBar'
+import { DefaultLayout } from "../../Layout/DefaultLayout";
+
 
 const ProfilePage = () => {
-  const { user, repos, setRepos, starred, setStarred } = useGlobalContext()
-  const [listToShow, setListToShow] = useState('repos')
+  const { user, repos, setRepos, starred, setStarred, listToShow } = useGlobalContext()
 
   useEffect(() => {
     getRepos()
     getStarred()
-  }, [user, listToShow])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user])
 
   const getRepos = () => {
     axios.get(`${BASE_URL}/${user.login}/repos?client_id=${client_id}&client_secret=${client_secret}`)
@@ -26,52 +29,55 @@ const ProfilePage = () => {
     .then(res => setStarred(res.data))
   }
 
+
   const reposList = repos.map(item => {
     return (
-      <div>
-        <h3> { item.name } </h3>
-      </div>
+      <Card key={item.id} item={item}/>
     )
   })
 
   const starredList = starred.map(item => {
     return (
-      <div>
-        <h3> { item.name } </h3>
-      </div>
+      <Card key={item.id} item={item}/>
     )
   })
 
   return (
-    <div className="container">
-      <div className="d-flex m-3">
-        <div>
-          logo
-        </div>
-        <SearchBar/>
-      </div>
-      <div className="row">
-        <div className="col-4">
-          <UserInfo/>
-        </div>
-        <div className="col-8">
-          <nav>
-            <button onClick={() => setListToShow('repo')}>
-              Repositórios
-            </button>
-            <button onClick={() => setListToShow('starred')}>
-              Starred
-            </button>
-          </nav>
-          <div className="row">
-            {listToShow === 'repo' 
-              ? reposList
-              : starredList
-            }
+    <DefaultLayout>
+      <div className="container">
+        <div className="row align-items-center py-4">
+          <div className="col-12 col-md-1 d-flex justify-content-center">
+            <Logo/>
+          </div>
+          <div className="col-12 col-md-8 mx-md-3 my-3 my-md-0 d-flex justify-content-center justify-content-md-start">
+            <SearchBar/>
           </div>
         </div>
       </div>
-    </div>
+      <div className="d-none d-md-block">
+        <NavBar/> 
+      </div>
+      <div className="container">
+        <div className="row">
+          <div className="col-12 col-md-4">
+            <div className="d-flex justify-content-center justify-content-md-start mb-3">
+              <UserInfo/>
+            </div>
+            <div className="col-12 d-md-none">
+              <NavBar/>
+            </div>
+          </div>
+          <div className="col-12 col-md-8 mt-5 pt-3">
+            <div className="row">
+              {listToShow === 'repo' 
+                ? reposList
+                : starredList
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    </DefaultLayout>
   )
 }
 

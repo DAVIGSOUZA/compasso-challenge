@@ -1,17 +1,25 @@
 import SearchBar from '../../components/SearchBar'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCoffee } from '@fortawesome/free-solid-svg-icons'
+import { DefaultLayout } from "../../Layout/DefaultLayout";
+import Logo from "../../components/Logo";
+import { Title } from "./styles";
+
 
 const HomePage = () => {
   
   return (
-    <div>
-      <h1>
-        Compasso Github Search
-      </h1>
-      <SearchBar/>
-      <FontAwesomeIcon icon={faCoffee} />
-    </div>
+    <DefaultLayout>
+      <div className="container d-flex flex-column align-items-center justify-content-center p-5">
+        <div className="d-flex align-items-center mt-5">
+          <Logo/>
+          <Title className="m-2">
+            Compasso Github Search
+          </Title>
+        </div>
+        <div className="mt-5">
+          <SearchBar/>
+        </div>
+      </div>
+    </DefaultLayout>
   )
 }
 

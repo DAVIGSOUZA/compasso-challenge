@@ -1,7 +1,6 @@
 import React from 'react'
 import HomePage from '../Pages/HomePage'
 import ProfilePage from '../Pages/ProfilePage'
-import ContactPage from '../Pages/ContactPage'
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 const Routes = () => {
@@ -11,11 +10,8 @@ const Routes = () => {
         <Route exact path={'/'}>
           <HomePage/>
         </Route>
-        <Route exact path={'/profile/:userId'}>
+        <Route exact path={'/:userName'}>
           <ProfilePage/>
-        </Route>
-        <Route exact path={'/contact'}>
-          <ContactPage/>
         </Route>
         <Route>
           <HomePage/>
