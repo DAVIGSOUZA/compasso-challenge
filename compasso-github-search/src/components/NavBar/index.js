@@ -12,7 +12,6 @@ const NavBar = () => {
   }, [listToShow])
 
   const activeTab = () => {
-    console.log(listToShow)
     if (listToShow === 'repo') {
       return (
         <div>
