@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 import { requestData } from "../../utils/request";
-// import { client_id, client_secret } from '../../utils'
 import useGlobalContext from '../../Context/GlobalContext'
 import SearchBar from '../../components/SearchBar'
 import UserInfo from '../../components/UserInfo'
@@ -22,16 +21,11 @@ const ProfilePage = () => {
   const getRepos = () => {
     const promise = requestData(`${user.login}/repos`)
     promise.then(res => setRepos(res))
-
-    // api.get(`/${user.login}/repos?client_id=${client_id}&client_secret=${client_secret}`)
-    //   .then(res => setRepos(res.data))
   }
 
   const getStarred = () => {
     const promise = requestData(`${user.login}/starred`)
     promise.then(res => setStarred(res))
-    // api.get(`/${user.login}/starred?client_id=${client_id}&client_secret=${client_secret}`)
-    // .then(res => setStarred(res.data))
   }
 
 
