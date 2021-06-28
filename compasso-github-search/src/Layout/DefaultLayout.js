@@ -5,5 +5,5 @@ export const DefaultLayout = styled.div`
   min-height: 100vh;
   font-family: 'Open Sans', sans-serif;  
   background-color: #0D1017;
-  color: whitesmoke
+  color: whitesmoke;
 `

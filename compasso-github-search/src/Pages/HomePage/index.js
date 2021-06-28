@@ -2,9 +2,11 @@ import SearchBar from '../../components/SearchBar'
 import { DefaultLayout } from "../../Layout/DefaultLayout";
 import Logo from "../../components/Logo";
 import { Title } from "./styles";
+import useGlobalContext from '../../Context/GlobalContext'
 
 
 const HomePage = () => {
+  const { error } = useGlobalContext()
   
   return (
     <DefaultLayout>
@@ -18,6 +20,7 @@ const HomePage = () => {
         <div className="mt-5">
           <SearchBar/>
         </div>
+        { error && <p className="text-muted mt-5"> { error } </p> }
       </div>
     </DefaultLayout>
   )

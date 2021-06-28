@@ -8,7 +8,7 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const SearchBar = () => {
-  const { setUser } = useGlobalContext()
+  const { setUser, setError } = useGlobalContext()
   const [searchedUser, setSearchedUser] = useState('')
   const history = useHistory()
 
@@ -25,9 +25,13 @@ const SearchBar = () => {
     const promise = requestData(`${searchedUser.length ? searchedUser : userName}`)
     promise.then(res => {
       setUser(res)
+      setError('')
       goToProfilePage(history, res.login)
       setSearchedUser('')
-    }).catch(err => alert(`${err}: Tente inserir um usuário válido`))
+    }).catch(err => {
+      setError('Algo deu errado, tente pesquisar um usuário válido')
+      setSearchedUser('')
+    })
   }
 
   return (

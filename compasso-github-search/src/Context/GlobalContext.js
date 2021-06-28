@@ -7,6 +7,7 @@ export const GlobalProvider = ({children}) => {
   const [repos, setRepos] = useState([])
   const [starred, setStarred] = useState([])
   const [listToShow, setListToShow] = useState('repo')
+  const [error, setError] = useState('')
 
   return(
     <GlobalContext.Provider value={
@@ -18,7 +19,9 @@ export const GlobalProvider = ({children}) => {
         starred,
         setStarred,
         listToShow,
-        setListToShow
+        setListToShow,
+        error,
+        setError
       }
     }>
       {children}
@@ -28,6 +31,6 @@ export const GlobalProvider = ({children}) => {
 
 export default function useGlobalContext() {
   const data = useContext(GlobalContext)
-  const { user, setUser, repos, setRepos, starred, setStarred, listToShow, setListToShow } = data
-  return { user, setUser, repos, setRepos, starred, setStarred, listToShow, setListToShow }
+  const { user, setUser, repos, setRepos, starred, setStarred, listToShow, setListToShow, error, setError } = data
+  return { user, setUser, repos, setRepos, starred, setStarred, listToShow, setListToShow, error, setError }
 }
