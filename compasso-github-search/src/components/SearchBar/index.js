@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react'
-// import { api } from "../../utils/request";
-// import { client_id, client_secret } from "../../utils";
 import useGlobalContext from "../../Context/GlobalContext";
 import { goToProfilePage } from "../../Routes/coordinators";
 import { useHistory, useParams } from 'react-router';
@@ -30,15 +28,6 @@ const SearchBar = () => {
       goToProfilePage(history, res.login)
       setSearchedUser('')
     }).catch(err => alert(`${err}: Tente inserir um usuário válido`))
-
-    // api.get(`/${searchedUser.length ? searchedUser : userName}?client_id=${client_id}&client_secret=${client_secret}`)
-    // .then(res => {
-    //   console.log(res.data)
-    //   setUser(res.data)
-    //   goToProfilePage(history, res.data.login)
-    //   setSearchedUser('')
-    // })
-    // .catch(err => alert(`${err}: Tente inserir um usuário válido`))
   }
 
   return (
