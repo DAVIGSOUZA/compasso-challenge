@@ -10,7 +10,7 @@ import { DefaultLayout } from "../../Layout/DefaultLayout";
 
 
 const ProfilePage = () => {
-  const { user, repos, setRepos, starred, setStarred, listToShow } = useGlobalContext()
+  const { user, repos, setRepos, starred, setStarred, listToShow, error } = useGlobalContext()
 
   useEffect(() => {
     if (user && user.id) {
@@ -72,15 +72,22 @@ const ProfilePage = () => {
             <div className="col-12 col-md-8 mt-5 pt-3">
               <div className="row">
                 {listToShow === 'repo' 
-                  ? reposList
-                  : starredList
+                  ? repos.length 
+                    ? reposList
+                    : <p className="text-muted mt-5"> Este usuário não possui repositórios públicos </p>
+                  : starred.length
+                    ? starredList
+                    : <p className="text-muted mt-5"> Este usuário não possui uma starred list</p>
                 }
               </div>
             </div>
           </div>
         </div>
         :
-        <p> Nenhum usuário encontrado</p>
+        <div className="container d-flex flex-column justify-content-center align-items-center mt-5 pt-5">
+          <p className="text-muted"> { error }</p>
+        </div>
+
       }
     </DefaultLayout>
   )
