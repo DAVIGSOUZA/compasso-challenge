@@ -13,8 +13,10 @@ const ProfilePage = () => {
   const { user, repos, setRepos, starred, setStarred, listToShow } = useGlobalContext()
 
   useEffect(() => {
-    getRepos()
-    getStarred()
+    if (user && user.id) {
+      getRepos()
+      getStarred()
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user])
 
@@ -56,26 +58,30 @@ const ProfilePage = () => {
       <div className="d-none d-md-block">
         <NavBar/> 
       </div>
-      <div className="container">
-        <div className="row">
-          <div className="col-12 col-md-4">
-            <div className="d-flex justify-content-center justify-content-md-start mb-3">
-              <UserInfo/>
+      { user && user.id ?
+        <div className="container">
+          <div className="row">
+            <div className="col-12 col-md-4">
+              <div className="d-flex justify-content-center justify-content-md-start mb-3">
+                <UserInfo/>
+              </div>
+              <div className="col-12 d-md-none">
+                <NavBar/>
+              </div>
             </div>
-            <div className="col-12 d-md-none">
-              <NavBar/>
-            </div>
-          </div>
-          <div className="col-12 col-md-8 mt-5 pt-3">
-            <div className="row">
-              {listToShow === 'repo' 
-                ? reposList
-                : starredList
-              }
+            <div className="col-12 col-md-8 mt-5 pt-3">
+              <div className="row">
+                {listToShow === 'repo' 
+                  ? reposList
+                  : starredList
+                }
+              </div>
             </div>
           </div>
         </div>
-      </div>
+        :
+        <p> Nenhum usuário encontrado</p>
+      }
     </DefaultLayout>
   )
 }
