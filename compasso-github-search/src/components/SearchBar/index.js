@@ -1,15 +1,17 @@
-import React, { useEffect } from 'react'
-import axios from 'axios'
-import { BASE_URL, client_id, client_secret } from "../../utils";
+import React, { useEffect, useState } from 'react'
+// import { api } from "../../utils/request";
+// import { client_id, client_secret } from "../../utils";
 import useGlobalContext from "../../Context/GlobalContext";
 import { goToProfilePage } from "../../Routes/coordinators";
 import { useHistory, useParams } from 'react-router';
 import { SearchWrapper, SearchInput, SearchButton } from "./styles";
+import { requestData } from "../../utils/request";
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const SearchBar = () => {
-  const { searchedUser, setSearchedUser, setUser } = useGlobalContext()
+  const { setUser } = useGlobalContext()
+  const [searchedUser, setSearchedUser] = useState('')
   const history = useHistory()
 
   const { userName } = useParams()
@@ -22,13 +24,21 @@ const SearchBar = () => {
   }, [userName])
 
   const getUser = () => {
-    axios.get(`${BASE_URL}/${searchedUser.length ? searchedUser : userName}?client_id=${client_id}&client_secret=${client_secret}`)
-    .then(res => {
-      setUser(res.data)
-      goToProfilePage(history, res.data.login)
+    const promise = requestData(`${searchedUser.length ? searchedUser : userName}`)
+    promise.then(res => {
+      setUser(res)
+      goToProfilePage(history, res.login)
       setSearchedUser('')
-    })
-    .catch(err => alert(`${err}: Tente inserir um usuário válido`))
+    }).catch(err => alert(`${err}: Tente inserir um usuário válido`))
+
+    // api.get(`/${searchedUser.length ? searchedUser : userName}?client_id=${client_id}&client_secret=${client_secret}`)
+    // .then(res => {
+    //   console.log(res.data)
+    //   setUser(res.data)
+    //   goToProfilePage(history, res.data.login)
+    //   setSearchedUser('')
+    // })
+    // .catch(err => alert(`${err}: Tente inserir um usuário válido`))
   }
 
   return (
@@ -42,7 +52,7 @@ const SearchBar = () => {
         onKeyDown={ (e) => e.key === 'Enter' ? getUser() : null }
       />
       <SearchButton className="text-muted mx-1 p-1" onClick={ () => getUser() }>
-        <FontAwesomeIcon icon={ faSearch }/>
+          <FontAwesomeIcon icon={ faSearch }/>
       </SearchButton>
     </SearchWrapper>
   )

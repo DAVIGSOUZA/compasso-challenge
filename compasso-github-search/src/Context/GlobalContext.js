@@ -1,19 +1,16 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, createContext } from 'react'
 
-const GlobalContext = React.createContext()
+const GlobalContext = createContext()
 
 export const GlobalProvider = ({children}) => {
-  const [searchedUser, setSearchedUser] = useState('')
   const [user, setUser] = useState({})
   const [repos, setRepos] = useState([])
   const [starred, setStarred] = useState([])
-  const [listToShow, setListToShow] = useState('repos')
+  const [listToShow, setListToShow] = useState('repo')
 
   return(
     <GlobalContext.Provider value={
       { 
-        searchedUser,
-        setSearchedUser,
         user,
         setUser,
         repos,
@@ -31,6 +28,6 @@ export const GlobalProvider = ({children}) => {
 
 export default function useGlobalContext() {
   const data = useContext(GlobalContext)
-  const { searchedUser, setSearchedUser, user, setUser, repos, setRepos, starred, setStarred, listToShow, setListToShow } = data
-  return { searchedUser, setSearchedUser, user, setUser, repos, setRepos, starred, setStarred, listToShow, setListToShow }
+  const { user, setUser, repos, setRepos, starred, setStarred, listToShow, setListToShow } = data
+  return { user, setUser, repos, setRepos, starred, setStarred, listToShow, setListToShow }
 }
